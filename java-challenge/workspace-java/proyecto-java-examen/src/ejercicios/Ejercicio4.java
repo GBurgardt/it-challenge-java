@@ -2,8 +2,12 @@ package ejercicios;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Ejercicio4 {
 
@@ -29,24 +33,24 @@ public class Ejercicio4 {
 		informacion(lista1, 10);
 		
 		// EJERCICIO 4.2: corregir el metodo
-		// List<Integer> union = unionListas(lista1, lista2);
-		// System.out.println("union: " + union.toString());
+		List<Integer> union = unionListas(lista1, lista2);
+		System.out.println("union: " + union.toString());
 		
 		// // EJERCICIO 4.3: implementar
-		// List<Integer> interseccion = interseccionListas(lista1, lista2);
-		// System.out.println("interseccion: " + interseccion.toString());
+		List<Integer> interseccion = interseccionListas(lista1, lista2);
+		System.out.println("interseccion: " + interseccion.toString());
 		
 		// // EJERCICIO 4.4: implementar
-		// List<Integer> orden1 = ordenaListaAscendente(lista1);
-		// System.out.println("orden asc: " + orden1);
+		List<Integer> orden1 = ordenaListaAscendente(lista1);
+		System.out.println("orden asc: " + orden1);
 		
 		// // EJERCICIO 4.5: implementar
-		// List<Integer> orden2 = ordenaListaDescendente(lista2);
-		// System.out.println("orden desc: " + orden2);
+		List<Integer> orden2 = ordenaListaDescendente(lista2);
+		System.out.println("orden desc: " + orden2);
 
 		// // EJERCICIO 4.6: implementar
-		// boolean b = tienenMismoContenido(lista1, lista2);
-		// System.out.println("mismo contenido: " + b);
+		boolean b = tienenMismoContenido(lista1, lista2);
+		System.out.println("mismo contenido: " + b);
 		
 	}
 
@@ -54,7 +58,9 @@ public class Ejercicio4 {
 		// TODO: explicar salidas de los system out y sugerir alguna mejora a la implementacion
 
 		// MEJORAS: Todas las operaciones realizadas se pueden mejorar aplicando un enfoque mas funcional (evitar bucles, condicionales para evitar side-efects)
-		// Se deja comentado el código viejo y descomentado el código nuevo/mejorado
+		// Por otro lado, al usar streams es necesario considerar antes el tema performance. Si manejamos arrays de muchísimos elementos, quizás el enfoque con streams
+		// no sea el mas adecuado. Pero este no es el caso, así que usamos streams por todas sus ventajas.
+		// *Se deja comentado el código viejo y descomentado el código nuevo/mejorado
 		
 		// int pares = 0;
 		// for (Integer n: lista1) {
@@ -151,17 +157,34 @@ public class Ejercicio4 {
 	private static List<Integer> unionListas(List<Integer> lista1, List<Integer> lista2) {
 		// TODO: corregir el metodo para que funcione correctamente 
 		
-		List<Integer> union = null;
+		// Se estaba intentando agregar elemenetos a un array (union) que todavía no estaba instanciado. Instanciando la variable con un ArrayList vació compila correctamente
+		List<Integer> union = new ArrayList<Integer>();
 		
-		union.addAll(lista1);
+		// El problema que surge acá es que lista1 puede tener elementos repetidos. Al agregarla completa a la unión, se están agregnado tambien los elementos repetidos
+		// Y en una unión NO hay elementos repetidos.
+		// Una mejor solución es usar un HashSet que NO tienen elementos repetidos.
+		// union.addAll(lista1);
 		
-		for (Integer m: lista2) {
-			if (!union.contains(m)) {
-				union.add(m);
-			}
-		}
+		// for (Integer m: lista2) {
+		// 	if (!union.contains(m)) {
+		// 		union.add(m);
+		// 	}
+		// }
 		
-		return union;
+		// return union;
+
+		Set<Integer> set = new HashSet<Integer>();
+
+        set.addAll(lista1);
+        set.addAll(lista2);
+
+        return new ArrayList<Integer>(set);
+
+		// Dejo comentada una solución con streams. Aunque por performance se prefiere HashSet
+		// return Stream.concat(lista1.stream(), lista2.stream())
+		// 	.distinct()
+		// 	.collect(Collectors.toList());
+
 	}
 
 	/***
@@ -172,8 +195,20 @@ public class Ejercicio4 {
 	 * 
 	 */
 	private static List<Integer> interseccionListas(List<Integer> lista1, List<Integer> lista2) {
-		// TODO:
-		return new ArrayList<Integer>();
+		List<Integer> interseccion = new ArrayList<Integer>();
+		
+		for (Integer m: lista2) {
+			if (!interseccion.contains(m) && lista1.contains(m)) {
+				interseccion.add(m);
+			}
+		}
+		
+		return interseccion;
+
+		// Dejo acá abajo comentada una solución mas simple con streams. Como se dice arriba, antes de implementarla siempre considerar tema performance.
+		// return lista1.stream()
+		// 	.filter(lista2::contains)
+		// 	.collect(Collectors.toList());
 	}
 
 	/***
@@ -183,8 +218,14 @@ public class Ejercicio4 {
 	 * 
 	 */
 	private static List<Integer> ordenaListaAscendente(List<Integer> lista1) {
-		// TODO:
-		return new ArrayList<Integer>();
+		// Creo una nueva lista para no mutar la original
+		List<Integer> listaOrdenada = new ArrayList<Integer>();
+		listaOrdenada.addAll(lista1);
+
+		// La ordeno ascendente
+		listaOrdenada.sort(Comparator.naturalOrder());
+
+		return listaOrdenada;
 	}
 
 	/***
@@ -194,8 +235,14 @@ public class Ejercicio4 {
 	 * 
 	 */
 	private static List<Integer> ordenaListaDescendente(List<Integer> lista2) {
-		// TODO:
-		return new ArrayList<Integer>();
+		// Creo una nueva lista para no mutar la original
+		List<Integer> listaOrdenada = new ArrayList<Integer>();
+		listaOrdenada.addAll(lista2);
+
+		// La ordeno ascendente
+		listaOrdenada.sort(Comparator.reverseOrder());
+
+		return listaOrdenada;
 	}
 
 	/***
@@ -208,8 +255,23 @@ public class Ejercicio4 {
 	 * 
 	 */
 	private static boolean tienenMismoContenido(List<Integer> lista1, List<Integer> lista2) {
-		// TODO:		
+		
+		// Lo primero que chequeamos es que tengan la misma cant de elementos. Si no tienen la misma cant, entonces lo contienen los mismos elementos
+		if (lista1.size() != lista2.size()) {
+			return false;
+		}
+
+		// Hacemos un bucle de lista1.size() ciclos y vamos comparando guiándonos por el índice
+		for (int i = 0; i < lista1.size(); i++) {
+			// El elemento de lista1 en índice i debe ser igual al elemento en lista2 en índice i. Si en algún caso esto no se cumple, las listas no contienen los mismos elementos por lo que retorno false
+			if (lista1.get(i) != lista2.get(i)) {
+				return false;
+			}
+
+		}
+
 		return true;
+
 	}
 
 }

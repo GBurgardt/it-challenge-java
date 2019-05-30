@@ -1,2 +1,4 @@
 java-challenge/workspace-java/.metadata/
 # java-challenge/workspace-java/proyecto-java-examen/bin/
+/aplicacion-challenge/backend-java/TecsoAppLib/target/
+/aplicacion-challenge/backend-java/TecsoAppRest/target/

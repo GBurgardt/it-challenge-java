@@ -7,11 +7,13 @@ import { AuthService } from './shared/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AlumnoService } from './alumnos/shared/alumno.service';
 import { AlumnoComponent } from './alumnos/alumno/alumno.component';
+import { NuevoAlumnoComponent } from './alumnos/nuevo-alumno/nuevo-alumno.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        AlumnoComponent
+        AlumnoComponent,
+        NuevoAlumnoComponent
     ],
     imports: [
         BrowserModule,

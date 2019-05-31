@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AlumnoComponent } from './alumnos/alumno/alumno.component';
+import { NuevoAlumnoComponent } from './alumnos/nuevo-alumno/nuevo-alumno.component';
 
 const routes: Routes = [
     {
@@ -8,18 +9,14 @@ const routes: Routes = [
         component: AlumnoComponent
     },
     {
-        path: '',
-        redirectTo: '/alumnos',
-        pathMatch: 'full'
-    },
-    {
-        path: '**',
-        component: AlumnoComponent
+        path: 'alumnos/nuevo',
+        component: NuevoAlumnoComponent
     }
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

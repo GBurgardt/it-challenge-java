@@ -1,9 +1,35 @@
 <div class="alumno-container">
 
-    <ul class="alumnos-list">
-        <li *ngFor="let a of alumnos | async">
-            {{ a.nombre }}
-        </li>
-    </ul>
+    <div *ngIf="alumnos | async" class="table-container">
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tr *ngFor="let a of alumnos | async">
+                    <td>{{ a.legajo }}</td>
+                    <td>{{ a.legajo }}</td>
+                    <td>{{ a.legajo }}</td>
+                    <td>{{ a.legajo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!(alumnos | async)"  class="spinner-container">
+        Cargando..
+        <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <div class="btn-container">
+        <button [routerLink]="['/alumnos/nuevo']" class="pure-button">Nuevo</button>
+    </div>
+
 
 </div>

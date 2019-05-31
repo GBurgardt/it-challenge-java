@@ -1,0 +1,12 @@
+.nuevo-alumno {
+    margin: 10px;
+    width: 40%;
+
+    .btn-container {
+        margin-top: 10px;
+
+        :first-child {
+            margin-right: 5px;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<div class="alumno-container">
+
+    <ul class="alumnos-list">
+        <li *ngFor="let a of alumnos | async">
+            {{ a.nombre }}
+        </li>
+    </ul>
+
+</div>

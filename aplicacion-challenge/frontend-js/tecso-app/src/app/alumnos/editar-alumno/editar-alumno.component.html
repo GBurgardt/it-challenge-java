@@ -1,7 +1,7 @@
-<div class="nuevo-alumno">
+<div class="editar-alumno">
     <form #alumnoForm="ngForm" class="pure-form pure-form-stacked">
         <fieldset>
-            <legend>Nuevo Alumno</legend>
+            <legend>Editar Alumno</legend>
 
             <div class="pure-g">
                 <div class="pure-u-1 pure-u-md-1-3">
@@ -16,7 +16,7 @@
 
                 <div class="pure-u-1 pure-u-md-1-3">
                     <label for="fecha-nacimiento">Fecha Nacimiento</label>
-                    <input [(ngModel)]="alumno.fechanac" id="fecha-nacimiento" name="naci" class="pure-u-23-24" type="date" required>
+                    <input [ngModel] ="alumno.fechanac | date:'yyyy-MM-dd'" (ngModelChange)="alumno.fechanac = $event" id="fecha-nacimiento" name="naci" class="pure-u-23-24" type="date" required>
                 </div>
 
                 <div class="pure-u-1 pure-u-md-1-3">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="btn-container">
-                <button [disabled]="!alumnoForm.form.valid" (click)="onClickCrear()" type="submit" class="pure-button pure-button-primary">Crear</button>
+                <button [disabled]="!alumnoForm.form.valid" (click)="onClickConfirmar()" type="submit" class="pure-button pure-button-primary">Confirmar</button>
                 <button [routerLink]="['/home/alumnos']" class="pure-button pure-button-secondary">Cancel</button>
             </div>
 

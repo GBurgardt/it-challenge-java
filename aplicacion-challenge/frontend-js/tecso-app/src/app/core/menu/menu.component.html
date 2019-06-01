@@ -1,0 +1,12 @@
+<div class="menu-container">
+    <div class="pure-menu custom-restricted-width">
+        <ul class="pure-menu-list">
+
+            <li (click)="onClickMenu(m)" [ngClass]="{ 'pure-menu-selected': m.activo }" *ngFor="let m of menus" class="pure-menu-item ">
+                <a [routerLink]="[m.url]" class="pure-menu-link">
+                    {{ m.descripcion }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

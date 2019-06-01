@@ -30,21 +30,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "InscripcionesCarrera.findAll", query = "SELECT i FROM InscripcionesCarrera i"),
-    @NamedQuery(name = "InscripcionesCarrera.findByFechainscripcion", query = "SELECT i FROM InscripcionesCarrera i WHERE i.fechainscripcion = :fechainscripcion"),
-    @NamedQuery(name = "InscripcionesCarrera.findById", query = "SELECT i FROM InscripcionesCarrera i WHERE i.id = :id")})
+    @NamedQuery(name = "InscripcionesCarrera.findByIdentificador", query = "SELECT i FROM InscripcionesCarrera i WHERE i.identificador = :identificador"),
+    @NamedQuery(name = "InscripcionesCarrera.findByFechainscripcion", query = "SELECT i FROM InscripcionesCarrera i WHERE i.fechainscripcion = :fechainscripcion")})
 public class InscripcionesCarrera implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "identificador")
+    private Integer identificador;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechainscripcion")
     @Temporal(TemporalType.DATE)
     private Date fechainscripcion;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")
-    private Integer id;
     @JoinColumn(name = "idalumno", referencedColumnName = "identificador")
     @ManyToOne(optional = false)
     private Alumno idalumno;
@@ -55,13 +55,21 @@ public class InscripcionesCarrera implements Serializable {
     public InscripcionesCarrera() {
     }
 
-    public InscripcionesCarrera(Integer id) {
-        this.id = id;
+    public InscripcionesCarrera(Integer identificador) {
+        this.identificador = identificador;
     }
 
-    public InscripcionesCarrera(Integer id, Date fechainscripcion) {
-        this.id = id;
+    public InscripcionesCarrera(Integer identificador, Date fechainscripcion) {
+        this.identificador = identificador;
         this.fechainscripcion = fechainscripcion;
+    }
+
+    public Integer getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(Integer identificador) {
+        this.identificador = identificador;
     }
 
     public Date getFechainscripcion() {
@@ -70,14 +78,6 @@ public class InscripcionesCarrera implements Serializable {
 
     public void setFechainscripcion(Date fechainscripcion) {
         this.fechainscripcion = fechainscripcion;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Alumno getIdalumno() {
@@ -99,7 +99,7 @@ public class InscripcionesCarrera implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (identificador != null ? identificador.hashCode() : 0);
         return hash;
     }
 
@@ -110,7 +110,7 @@ public class InscripcionesCarrera implements Serializable {
             return false;
         }
         InscripcionesCarrera other = (InscripcionesCarrera) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.identificador == null && other.identificador != null) || (this.identificador != null && !this.identificador.equals(other.identificador))) {
             return false;
         }
         return true;
@@ -118,7 +118,7 @@ public class InscripcionesCarrera implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.InscripcionesCarrera[ id=" + id + " ]";
+        return "entidades.InscripcionesCarrera[ identificador=" + identificador + " ]";
     }
     
 }

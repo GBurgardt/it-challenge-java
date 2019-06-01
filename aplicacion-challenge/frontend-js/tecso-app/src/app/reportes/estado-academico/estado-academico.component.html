@@ -1,0 +1,26 @@
+<div class="estado-academico-container">
+    <div *ngIf="carreras | async" class="table-container">
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Carrera</th>
+                    <th>Fecha Inscripcion</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let c of carreras | async">
+                    <td>{{ c.identificador }}</td>
+                    <td>{{ c.carrera }}</td>
+                    <td>{{ c.fechainscripcion | date:'yyyy-MM-dd' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!(carreras | async)" class="spinner-container">
+        <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+</div>

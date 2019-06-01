@@ -7,6 +7,8 @@ package persistencia;
 
 import entidades.Persona;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -27,6 +29,47 @@ public class PersonaFacade extends AbstractFacade<Persona> {
 
     public PersonaFacade() {
         super(Persona.class);
+    }
+    
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean setPersonaNueva(Persona persona) {
+        boolean transaccion = true;
+        try {
+            em.persist(persona);
+            em.flush();
+            return transaccion;
+        } catch (Exception e){
+            System.out.println(e);
+            transaccion = false;
+            return transaccion;
+        }
+    }
+       
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean editPersona(Persona persona) {
+        boolean transaccion = true;
+        try {
+            em.merge(persona);
+            em.flush();
+            return transaccion;
+        } catch (Exception e){
+            transaccion = false;
+            return transaccion;
+        }
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean deletePersona(Persona persona) {
+        boolean transaccion = true;
+        try {
+            em.remove(persona);
+            em.flush();
+            return transaccion;
+        } catch (Exception e){
+            transaccion = false;
+            return transaccion;
+        }
     }
     
 }

@@ -1,23 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Alumno } from '../shared/alumno.model';
 import { AlumnoService } from '../shared/alumno.service';
+import { Router } from '@angular/router';
+import { UtilsService } from 'src/app/shared/utils.service';
 
 @Component({
     selector: 'nuevo-alumno',
     templateUrl: './nuevo-alumno.component.html',
     styleUrls: ['./nuevo-alumno.component.scss']
 })
-export class NuevoAlumnoComponent implements OnInit {
+export class NuevoAlumnoComponent {
 
-    alumno: Alumno;
+    alumno: Alumno = new Alumno();
 
     constructor(
-        private alumnoService: AlumnoService
+        private alumnoService: AlumnoService,
+        private utilsService: UtilsService,
+        private router: Router
     ) { }
 
-    ngOnInit() {
-        // this.alumnos = this.alumnoService.getAlumnos();
-    }
 
+    onClickCrear = () => {
+        this.alumnoService.crearAlumno(this.alumno)
+            .then((resp: any) => {
+                alert(`${resp.control.codigo}\n${resp.control.descripcion}`);
+                this.router.navigate(['/home/alumnos/']);
+            })
+            .catch(err => {
+                this.utilsService.showError(err);
+            })
+    }
 
 }

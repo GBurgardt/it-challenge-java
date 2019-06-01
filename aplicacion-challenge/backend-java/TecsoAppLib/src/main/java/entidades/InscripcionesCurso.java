@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,21 +32,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "InscripcionesCurso.findAll", query = "SELECT i FROM InscripcionesCurso i"),
-    @NamedQuery(name = "InscripcionesCurso.findByFechainscripcion", query = "SELECT i FROM InscripcionesCurso i WHERE i.fechainscripcion = :fechainscripcion"),
-    @NamedQuery(name = "InscripcionesCurso.findById", query = "SELECT i FROM InscripcionesCurso i WHERE i.id = :id")})
+    @NamedQuery(name = "InscripcionesCurso.findByIdentificador", query = "SELECT i FROM InscripcionesCurso i WHERE i.identificador = :identificador"),
+    @NamedQuery(name = "InscripcionesCurso.findByFechainscripcion", query = "SELECT i FROM InscripcionesCurso i WHERE i.fechainscripcion = :fechainscripcion")})
 public class InscripcionesCurso implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "identificador")
+    private Integer identificador;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechainscripcion")
     @Temporal(TemporalType.DATE)
     private Date fechainscripcion;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")
-    private Integer id;
     @JoinColumn(name = "idalumno", referencedColumnName = "identificador")
     @ManyToOne(optional = false)
     private Alumno idalumno;
@@ -52,16 +54,27 @@ public class InscripcionesCurso implements Serializable {
     @ManyToOne(optional = false)
     private Curso idcurso;
 
+    @Column(name = "notaFinal")
+    private Integer notaFinal;
+    
     public InscripcionesCurso() {
     }
 
-    public InscripcionesCurso(Integer id) {
-        this.id = id;
+    public InscripcionesCurso(Integer identificador) {
+        this.identificador = identificador;
     }
 
-    public InscripcionesCurso(Integer id, Date fechainscripcion) {
-        this.id = id;
+    public InscripcionesCurso(Integer identificador, Date fechainscripcion) {
+        this.identificador = identificador;
         this.fechainscripcion = fechainscripcion;
+    }
+
+    public Integer getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(Integer identificador) {
+        this.identificador = identificador;
     }
 
     public Date getFechainscripcion() {
@@ -70,14 +83,6 @@ public class InscripcionesCurso implements Serializable {
 
     public void setFechainscripcion(Date fechainscripcion) {
         this.fechainscripcion = fechainscripcion;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Alumno getIdalumno() {
@@ -96,10 +101,20 @@ public class InscripcionesCurso implements Serializable {
         this.idcurso = idcurso;
     }
 
+    public Integer getNotaFinal() {
+        return notaFinal;
+    }
+
+    public void setNotaFinal(Integer notaFinal) {
+        this.notaFinal = notaFinal;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (identificador != null ? identificador.hashCode() : 0);
         return hash;
     }
 
@@ -110,7 +125,7 @@ public class InscripcionesCurso implements Serializable {
             return false;
         }
         InscripcionesCurso other = (InscripcionesCurso) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.identificador == null && other.identificador != null) || (this.identificador != null && !this.identificador.equals(other.identificador))) {
             return false;
         }
         return true;
@@ -118,7 +133,7 @@ public class InscripcionesCurso implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.InscripcionesCurso[ id=" + id + " ]";
+        return "entidades.InscripcionesCurso[ identificador=" + identificador + " ]";
     }
     
 }

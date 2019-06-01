@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    // WS_URL: 'http://localhost:8080/TecsoAppRest/ws'
-    WS_URL: 'http://165.22.198.233:8080/TecsoAppRest-1.0-SNAPSHOT/ws'
+    WS_URL: 'http://localhost:8080/TecsoAppRest/ws'
+    // WS_URL: 'http://165.22.198.233:8080/TecsoAppRest-1.0-SNAPSHOT/ws'
 };
 
 /*

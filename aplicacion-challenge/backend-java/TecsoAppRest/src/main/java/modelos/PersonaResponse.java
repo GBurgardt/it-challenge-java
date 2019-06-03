@@ -4,7 +4,7 @@ import entidades.Persona;
 import java.util.Date;
 
 public class PersonaResponse implements Payload {
-    private Integer identificador;
+    protected Integer identificador;
     private String tipodoc;
     private long documento;
     private String nombre;

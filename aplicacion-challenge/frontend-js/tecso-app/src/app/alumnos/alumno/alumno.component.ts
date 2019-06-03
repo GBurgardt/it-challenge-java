@@ -23,7 +23,7 @@ export class AlumnoComponent implements OnInit {
     }
 
     onClickEdit = (alumno: Alumno) => {
-        this.router.navigate(['/home/alumnos/editar', alumno.identificador]);
+        this.router.navigate(['/home/alumnos/', alumno.identificador]);
     }
 
 

@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Alumno.findAll", query = "SELECT a FROM Alumno a"),
     @NamedQuery(name = "Alumno.findByIdentificador", query = "SELECT a FROM Alumno a WHERE a.identificador = :identificador"),
-    @NamedQuery(name = "Alumno.findByLegajo", query = "SELECT a FROM Alumno a WHERE a.legajo = :legajo")})
+    @NamedQuery(name = "Alumno.findByLegajo", query = "SELECT a FROM Alumno a WHERE a.legajo = :legajo"),
+    @NamedQuery(name = "Alumno.findByClave", query = "SELECT a FROM Alumno a WHERE a.clave = :clave")})
 public class Alumno implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,8 +49,15 @@ public class Alumno implements Serializable {
     @NotNull
     @Column(name = "legajo")
     private int legajo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 40)
+    @Column(name = "clave")
+    private String clave;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idalumno")
     private Collection<InscripcionesCurso> inscripcionesCursoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idalumno")
+    private Collection<Acceso> accesoCollection;
     @JoinColumn(name = "idpersona", referencedColumnName = "identificador")
     @OneToOne
     private Persona idpersona;
@@ -62,9 +71,10 @@ public class Alumno implements Serializable {
         this.identificador = identificador;
     }
 
-    public Alumno(Integer identificador, int legajo) {
+    public Alumno(Integer identificador, int legajo, String clave) {
         this.identificador = identificador;
         this.legajo = legajo;
+        this.clave = clave;
     }
 
     public Integer getIdentificador() {
@@ -83,6 +93,14 @@ public class Alumno implements Serializable {
         this.legajo = legajo;
     }
 
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
     @XmlTransient
     public Collection<InscripcionesCurso> getInscripcionesCursoCollection() {
         return inscripcionesCursoCollection;
@@ -90,6 +108,15 @@ public class Alumno implements Serializable {
 
     public void setInscripcionesCursoCollection(Collection<InscripcionesCurso> inscripcionesCursoCollection) {
         this.inscripcionesCursoCollection = inscripcionesCursoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Acceso> getAccesoCollection() {
+        return accesoCollection;
+    }
+
+    public void setAccesoCollection(Collection<Acceso> accesoCollection) {
+        this.accesoCollection = accesoCollection;
     }
 
     public Persona getIdpersona() {

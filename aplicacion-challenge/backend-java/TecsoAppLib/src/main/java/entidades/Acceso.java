@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entidades;
 
 import java.io.Serializable;
@@ -16,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,14 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author germanburgardt
  */
 @Entity
-@Table(name = "inscripciones_curso")
+@Table(name = "acceso")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "InscripcionesCurso.findAll", query = "SELECT i FROM InscripcionesCurso i"),
-    @NamedQuery(name = "InscripcionesCurso.findByIdentificador", query = "SELECT i FROM InscripcionesCurso i WHERE i.identificador = :identificador"),
-    @NamedQuery(name = "InscripcionesCurso.findByFechainscripcion", query = "SELECT i FROM InscripcionesCurso i WHERE i.fechainscripcion = :fechainscripcion"),
-    @NamedQuery(name = "InscripcionesCurso.findByNotafinal", query = "SELECT i FROM InscripcionesCurso i WHERE i.notafinal = :notafinal")})
-public class InscripcionesCurso implements Serializable {
+    @NamedQuery(name = "Acceso.findAll", query = "SELECT a FROM Acceso a"),
+    @NamedQuery(name = "Acceso.findByIdentificador", query = "SELECT a FROM Acceso a WHERE a.identificador = :identificador"),
+    @NamedQuery(name = "Acceso.findByToken", query = "SELECT a FROM Acceso a WHERE a.token = :token"),
+    @NamedQuery(name = "Acceso.findByFechavencimiento", query = "SELECT a FROM Acceso a WHERE a.fechavencimiento = :fechavencimiento")})
+public class Acceso implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,28 +46,29 @@ public class InscripcionesCurso implements Serializable {
     private Integer identificador;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fechainscripcion")
+    @Size(min = 1, max = 70)
+    @Column(name = "token")
+    private String token;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechavencimiento")
     @Temporal(TemporalType.DATE)
-    private Date fechainscripcion;
-    @Column(name = "notafinal")
-    private Integer notafinal;
+    private Date fechavencimiento;
     @JoinColumn(name = "idalumno", referencedColumnName = "identificador")
     @ManyToOne(optional = false)
     private Alumno idalumno;
-    @JoinColumn(name = "idcurso", referencedColumnName = "identificador")
-    @ManyToOne(optional = false)
-    private Curso idcurso;
 
-    public InscripcionesCurso() {
+    public Acceso() {
     }
 
-    public InscripcionesCurso(Integer identificador) {
+    public Acceso(Integer identificador) {
         this.identificador = identificador;
     }
 
-    public InscripcionesCurso(Integer identificador, Date fechainscripcion) {
+    public Acceso(Integer identificador, String token, Date fechavencimiento) {
         this.identificador = identificador;
-        this.fechainscripcion = fechainscripcion;
+        this.token = token;
+        this.fechavencimiento = fechavencimiento;
     }
 
     public Integer getIdentificador() {
@@ -72,20 +79,20 @@ public class InscripcionesCurso implements Serializable {
         this.identificador = identificador;
     }
 
-    public Date getFechainscripcion() {
-        return fechainscripcion;
+    public String getToken() {
+        return token;
     }
 
-    public void setFechainscripcion(Date fechainscripcion) {
-        this.fechainscripcion = fechainscripcion;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public Integer getNotafinal() {
-        return notafinal;
+    public Date getFechavencimiento() {
+        return fechavencimiento;
     }
 
-    public void setNotafinal(Integer notafinal) {
-        this.notafinal = notafinal;
+    public void setFechavencimiento(Date fechavencimiento) {
+        this.fechavencimiento = fechavencimiento;
     }
 
     public Alumno getIdalumno() {
@@ -94,14 +101,6 @@ public class InscripcionesCurso implements Serializable {
 
     public void setIdalumno(Alumno idalumno) {
         this.idalumno = idalumno;
-    }
-
-    public Curso getIdcurso() {
-        return idcurso;
-    }
-
-    public void setIdcurso(Curso idcurso) {
-        this.idcurso = idcurso;
     }
 
     @Override
@@ -114,10 +113,10 @@ public class InscripcionesCurso implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InscripcionesCurso)) {
+        if (!(object instanceof Acceso)) {
             return false;
         }
-        InscripcionesCurso other = (InscripcionesCurso) object;
+        Acceso other = (Acceso) object;
         if ((this.identificador == null && other.identificador != null) || (this.identificador != null && !this.identificador.equals(other.identificador))) {
             return false;
         }
@@ -126,7 +125,7 @@ public class InscripcionesCurso implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.InscripcionesCurso[ identificador=" + identificador + " ]";
+        return "entidades.Acceso[ identificador=" + identificador + " ]";
     }
     
 }

@@ -42,7 +42,7 @@ public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    
+    @NotNull
     @Column(name = "identificador")
     private Integer identificador;
     @Basic(optional = false)
@@ -64,6 +64,9 @@ public class Curso implements Serializable {
     @JoinColumn(name = "idcarrera", referencedColumnName = "identificador")
     @ManyToOne
     private Carrera idcarrera;
+    @JoinColumn(name = "idProfesor", referencedColumnName = "identificador")
+    @ManyToOne(optional = false)
+    private Profesor idProfesor;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcurso")
     private Collection<InscripcionesCurso> inscripcionesCursoCollection;
 
@@ -127,6 +130,14 @@ public class Curso implements Serializable {
 
     public void setIdcarrera(Carrera idcarrera) {
         this.idcarrera = idcarrera;
+    }
+
+    public Profesor getIdProfesor() {
+        return idProfesor;
+    }
+
+    public void setIdProfesor(Profesor idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     @XmlTransient

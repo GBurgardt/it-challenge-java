@@ -8,12 +8,14 @@ public class InscripcionCursoResponse implements Payload {
     private Date fechainscripcion;
     private String curso;
     private Integer notaFinal;
+    private String carrera;
     
     public InscripcionCursoResponse(InscripcionesCurso inscrip) {
         this.identificador = inscrip.getIdentificador();
         this.fechainscripcion = inscrip.getFechainscripcion();
         this.curso = inscrip.getIdcurso().getNombre();
-        this.notaFinal = inscrip.getNotaFinal();
+        this.notaFinal = inscrip.getNotafinal();
+        this.carrera = inscrip.getIdcurso().getIdcarrera().getNombre();
     }
 
     public Integer getIdentificador() {
@@ -48,8 +50,14 @@ public class InscripcionCursoResponse implements Payload {
         this.notaFinal = notaFinal;
     }
 
-    
-    
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
     
     @Override
     public String getClassName() {

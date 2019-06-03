@@ -13,9 +13,15 @@ import { UtilsService } from './shared/utils.service';
 import { EditarAlumnoComponent } from './alumnos/editar-alumno/editar-alumno.component';
 import { MenuComponent } from './core/menu/menu.component';
 import { HomeComponent } from './core/home/home.component';
-import { EstadoAcademicoComponent } from './reportes/estado-academico/estado-academico.component';
-import { EstadoAcademicoService } from './reportes/shared/estado-academico.service';
-
+import { EstadoAcademicoComponent } from './alumnos/estado-academico/estado-academico.component';
+import { AlumnoInscriptosComponent } from './cursos/alumnos-inscriptos/alumnos-inscriptos.component';
+import { CursoService } from './cursos/shared/curso.service';
+import { CursoComponent } from './cursos/curso/curso.component';
+import { LoginComponent } from './inscripciones/login/login.component';
+import { InscripcionService } from './inscripciones/shared/inscripcion.service';
+import { LocalStorageService } from './shared/local-storage.service';
+import { NuevaInscripcionComponent } from './inscripciones/nueva-inscripcion/nueva-inscripcion.component';
+import { AuthGuardService } from './inscripciones/shared/auth-guard.service';
 
 @NgModule({
     declarations: [
@@ -25,7 +31,11 @@ import { EstadoAcademicoService } from './reportes/shared/estado-academico.servi
         EditarAlumnoComponent,
         MenuComponent,
         HomeComponent,
-        EstadoAcademicoComponent
+        EstadoAcademicoComponent,
+        AlumnoInscriptosComponent,
+        CursoComponent,
+        LoginComponent,
+        NuevaInscripcionComponent
     ],
     imports: [
         BrowserModule,
@@ -37,7 +47,10 @@ import { EstadoAcademicoService } from './reportes/shared/estado-academico.servi
         AuthService,
         AlumnoService,
         UtilsService,
-        EstadoAcademicoService
+        CursoService,
+        InscripcionService,
+        LocalStorageService,
+        AuthGuardService
     ],
     bootstrap: [AppComponent]
 })

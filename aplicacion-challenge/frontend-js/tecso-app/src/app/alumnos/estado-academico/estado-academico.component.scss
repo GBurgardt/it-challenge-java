@@ -1,0 +1,16 @@
+.estado-academico-container {
+    display: flex;
+
+    .table-container, .btn-container {
+        margin: 11px;
+
+        .btn-editar {
+            cursor: pointer;
+        }
+    }
+
+    .spinner-container {
+        margin: 24px 18px 19px;
+        font-size: 1.5rem;
+    }
+}

@@ -19,22 +19,17 @@ export class MenuComponent {
             {
                 descripcion: 'alumnos',
                 url: '/home/alumnos',
-                activo: currentRoute === '/home/alumnos'
+                activo: currentRoute.includes('/home/alumnos')
             },
-            // {
-            //     descripcion: 'estado academico',
-            //     url: '/home/estado-academico',
-            //     activo: currentRoute === '/home/estado-academico'
-            // },
             {
                 descripcion: 'cursos',
                 url: '/home/cursos',
-                activo: currentRoute === '/home/cursos'
+                activo: currentRoute.includes('/home/cursos')
             },
             {
                 descripcion: 'inscripcion curso',
-                url: '/home/inscripcion',
-                activo: currentRoute === '/home/inscripcion'
+                url: '/home/login',
+                activo: currentRoute.includes('/home/login')
             }
         ];
     }

@@ -1,15 +1,18 @@
 import { Injectable } from "@angular/core";
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Alumno } from '../alumnos/shared/alumno.model';
 import { UtilsService } from './utils.service';
+import { InscripcionCurso } from './inscripcion-curso.model';
+import { LocalStorageService } from './local-storage.service';
 
 
 @Injectable()
 export class AuthService {
     constructor(
         private http: HttpClient,
-        private utilsService: UtilsService
+        private utilsService: UtilsService,
+        private localStorageService: LocalStorageService
     ) { }
 
     /**
@@ -19,6 +22,7 @@ export class AuthService {
         `${environment.WS_URL}/alumnos`
     )
 
+
     /**
      * Retorna un Observable con un alumno, buscándolo con su id
      */
@@ -26,7 +30,7 @@ export class AuthService {
         `${environment.WS_URL}/alumnos/${idAlumno}`
     )
 
-    postAlumno = (alumno: Alumno) => this.http.post(
+    postAlumno = (alumno: Alumno, clave: String) => this.http.post(
         `${environment.WS_URL}/alumnos`,
         {
 
@@ -35,7 +39,8 @@ export class AuthService {
             tipoDoc: alumno.tipodoc,
             documento: alumno.documento,
             legajo: alumno.legajo,
-            fechaNac: this.utilsService.formatDate(alumno.fechanac)
+            fechaNac: this.utilsService.formatDate(alumno.fechanac),
+            clave
         }
     )
 
@@ -65,4 +70,38 @@ export class AuthService {
     getInscripcionesCursosByIdAlumno = (idAlumno) => this.http.get(
         `${environment.WS_URL}/alumnos/${idAlumno}/cursos`
     )
+
+    /**
+     * Retorna un observable con todos los alumnos inscriptos a un curso dado
+     */
+    getAlumnosInscriptosByIdCurso = (idCurso) => this.http.get(
+        `${environment.WS_URL}/cursos/${idCurso}/alumnos-inscriptos`
+    )
+
+    /**
+     * Retorna un Observable con todos los cursos
+     */
+    getCursos = () => this.http.get(
+        `${environment.WS_URL}/cursos`
+    )
+
+    login = (legajo: Number, clave: String) => this.http.post(
+        `${environment.WS_URL}/alumnos/login/${legajo}`,
+        { clave }
+    )
+
+    /**
+     * Inscribe el alumno actual logueado al curso dado
+     */
+    postInscripcionesCurso = (idCurso: Number) =>
+        this.http.post(
+            `${environment.WS_URL}/inscripciones-curso`,
+            { idCurso },
+            {
+                headers: new HttpHeaders({
+                    'Authorization': `Bearer ${this.localStorageService.getObject('token')}`
+                })
+            }
+        )
+
 }

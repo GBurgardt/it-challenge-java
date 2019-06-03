@@ -1,10 +1,9 @@
 <div class="alumno-container">
 
-    <div *ngIf="alumnos | async" class="table-container">
+    <div *ngIf="alumnosInscriptos | async" class="table-container">
         <table class="pure-table">
             <thead>
                 <tr>
-                    <th></th>
                     <th>#</th>
                     <th>Legajo</th>
                     <th>Nombre</th>
@@ -12,17 +11,11 @@
                     <th>Fecha Nac</th>
                     <th>Tipo Doc</th>
                     <th>Documento</th>
-                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr *ngFor="let a of alumnos | async">
-                    <td>
-                        <div (click)="onClickEdit(a)" class="btn-editar">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                    </td>
+                <tr *ngFor="let a of alumnosInscriptos | async">
                     <td>{{ a.identificador }}</td>
                     <td>{{ a.legajo }}</td>
                     <td>{{ a.nombre }}</td>
@@ -30,17 +23,12 @@
                     <td>{{ a.fechanac | date:'yyyy-MM-dd' }}</td>
                     <td>{{ a.tipodoc }}</td>
                     <td>{{ a.documento }}</td>
-                    <td>
-                        <button [routerLink]="['/home/alumnos/'+a.identificador+'/estado-academico']" class="pure-button">
-                            Estado Académico
-                        </button>
-                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div *ngIf="!(alumnos | async)"  class="spinner-container">
+    <div *ngIf="!(alumnosInscriptos | async)"  class="spinner-container">
         <i class="fas fa-spinner fa-spin"></i>
     </div>
 

@@ -1,0 +1,39 @@
+<div class="curso-container">
+
+    <div *ngIf="cursos | async" class="table-container">
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Carrera</th>
+                    <th>Cupo Maximo</th>
+                    <th>Profesor</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let a of cursos | async">
+                    <td>{{ a.identificador }}</td>
+                    <td>{{ a.nombre }}</td>
+                    <td>{{ a.descripcion }}</td>
+                    <td>{{ a.carrera }}</td>
+                    <td>{{ a.cupoMaximo }}</td>
+                    <td>{{ a.profesorResume }}</td>
+                    <td>
+                        <button [routerLink]="['/home/cursos/'+a.identificador+'/alumnos-inscriptos']" class="pure-button">
+                            Alumnos Inscriptos
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!(cursos | async)"  class="spinner-container">
+        <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+</div>

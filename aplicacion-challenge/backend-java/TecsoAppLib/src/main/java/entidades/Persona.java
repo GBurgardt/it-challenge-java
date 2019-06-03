@@ -72,6 +72,8 @@ public class Persona implements Serializable {
     private Date fechanac;
     @OneToOne(mappedBy = "idpersona")
     private Alumno alumno;
+    @OneToOne(mappedBy = "idpersona")
+    private Profesor profesor;
 
     public Persona() {
     }
@@ -143,6 +145,14 @@ public class Persona implements Serializable {
 
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
 
     @Override

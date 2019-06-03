@@ -12,6 +12,7 @@ import { UtilsService } from 'src/app/shared/utils.service';
 export class NuevoAlumnoComponent {
 
     alumno: Alumno = new Alumno();
+    clave: String;
 
     constructor(
         private alumnoService: AlumnoService,
@@ -21,7 +22,7 @@ export class NuevoAlumnoComponent {
 
 
     onClickCrear = () => {
-        this.alumnoService.crearAlumno(this.alumno)
+        this.alumnoService.crearAlumno(this.alumno, this.clave)
             .then((resp: any) => {
                 alert(`${resp.control.codigo}\n${resp.control.descripcion}`);
                 this.router.navigate(['/home/alumnos/']);

@@ -30,7 +30,8 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(servicios.AlumnoRest.class);
-        resources.add(servicios.EstadoAcademicoRest.class);
+        resources.add(servicios.CursoRest.class);
+        resources.add(servicios.InscripcionesCursoRest.class);
         resources.add(utils.CrossRules.class);
     }
     

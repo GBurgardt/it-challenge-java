@@ -12,9 +12,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @ApplicationScoped
 public class Utils {
-
+    
     public static JsonObject inputStreamToJson(InputStream inputStream) throws IOException {
         try {
             

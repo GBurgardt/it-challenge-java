@@ -8,6 +8,7 @@ public class AlumnoResponse extends PersonaResponse implements Payload {
     public AlumnoResponse(Alumno alum) {
         super(alum.getIdpersona());
         this.legajo = alum.getLegajo();
+        this.identificador = alum.getIdentificador();
     }
     
     @Override

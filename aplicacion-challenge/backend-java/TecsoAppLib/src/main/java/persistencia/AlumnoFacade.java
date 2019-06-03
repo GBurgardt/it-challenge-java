@@ -72,4 +72,34 @@ public class AlumnoFacade extends AbstractFacade<Alumno> {
         }
     }
     
+    /**
+     * Busca un alumno por su legajo (TODO: Estoy suponiendo que todos tienen legajo único, para simplificar
+     * @param legajo
+     * @return 
+     */
+    public Alumno findByLegajo(Integer legajo) {
+        Alumno ret = null;
+        try {
+            ret = (Alumno) em.createNamedQuery("Alumno.findByLegajo")
+                .setParameter("legajo", legajo)
+                .getSingleResult();
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+        return ret;
+    }
+    
+    /**
+     * Limpia cache y retorna un alumno dado su id
+     * @param idAlumno
+     * @return 
+     */
+    public Alumno findById(Integer idAlumno) {
+        em.getEntityManagerFactory().getCache().evictAll();
+//        em.getEntityManagerFactory().getCache().evict(Curso.class, "identificador");
+        
+        return this.find(idAlumno);
+    }
 }

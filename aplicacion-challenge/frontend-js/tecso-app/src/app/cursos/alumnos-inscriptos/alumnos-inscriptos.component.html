@@ -4,7 +4,6 @@
         <table class="pure-table">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Legajo</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -16,7 +15,6 @@
 
             <tbody>
                 <tr *ngFor="let a of alumnosInscriptos | async">
-                    <td>{{ a.identificador }}</td>
                     <td>{{ a.legajo }}</td>
                     <td>{{ a.nombre }}</td>
                     <td>{{ a.apellido }}</td>
@@ -30,10 +28,6 @@
 
     <div *ngIf="!(alumnosInscriptos | async)"  class="spinner-container">
         <i class="fas fa-spinner fa-spin"></i>
-    </div>
-
-    <div class="btn-container">
-        <button [routerLink]="['/home/alumnos/nuevo']" class="pure-button">Nuevo</button>
     </div>
 
 
